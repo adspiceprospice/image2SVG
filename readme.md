@@ -1,15 +1,22 @@
-pip install pillow numpy potrace
-
+pip install pillow numpy svgwrite opencv-python   
 
 ### Explanation:
-Preprocess the Image:
+1. Preprocessing:
 
-- Convert the image to grayscale to simplify the data.
-- Invert the image to ensure that the logo is black and the background is white, which is more suitable for the tracing process.
-- Enhance the contrast to make the edges of the logo more distinct.
-- Convert the image to a binary image (black and white) to remove any residual grayscale values, ensuring a clean transition between the logo and the background.
-- Convert the Preprocessed Image:
+- The image is processed to grayscale, optionally inverted, contrast-enhanced, and then converted to a binary image.
+- The binary image is then converted to uint8 type, which is compatible with PBM format.
 
-Use the potrace library to convert the preprocessed image to a bitmap.
-- Trace the bitmap to generate the vector path.
-- Write the vector path data to an SVG file.
+2. Saving as PBM:
+
+- The binary image is saved as a PBM file, which is the required input format for potrace.
+
+3. Vectorization with Potrace:
+
+- The script calls the potrace command line tool to convert the PBM file to an SVG file.
+
+4. Cleaning Up:
+
+- The temporary PBM files are removed after vectorization.
+
+### Usage
+python image2svg.py image.jpeg output_normal.svg output_inverted.svg
